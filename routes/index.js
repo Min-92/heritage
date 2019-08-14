@@ -7,6 +7,10 @@ const categoryObj = {
     ios: 'ios', front: 'front', back: 'back'
 }
 
+router.get('/categories', async (req, res, next) => {
+    res.send({categories : categoryObj});
+})
+
 router.get('/', async (req, res, next) => {
     res.sendStatus(200);
 })
