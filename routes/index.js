@@ -14,8 +14,8 @@ router.get('/', async (req, res, next) => {
 router.get('/:category', async (req, res, next) => {
     const category = req.params.category;
     if (categoryObj[category]) {
-        const heritageList = await Heritage.find({ category });
-        return res.send({ heritageList });
+        const questions = await Heritage.find({ category });
+        return res.send({ questions });
     }
     return next();
 })
