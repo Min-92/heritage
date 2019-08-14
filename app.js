@@ -1,11 +1,13 @@
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 const heritageRouter = require('./routes/heritage');
 const indexRouter = require('./routes/index');
 
 const port = process.env.PORT || 3000;
+const mongoURI = process.env.MONGO_URI;
 
 const app = express();
 
@@ -30,6 +32,11 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.render('error');
 })
+
+mongoose.connect((mongoURI), {
+    useCreateIndex: true,
+    useNewUrlParser: true
+});
 
 mongoose.connect((mongoURI), {
     useCreateIndex: true,
