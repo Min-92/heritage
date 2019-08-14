@@ -1,6 +1,8 @@
 const express = require('express');
 const logger = require('morgan');
 
+const indexRouter = require('./routes/index');
+
 const port = process.env.PORT || 3000;
 
 const app = express();
@@ -9,6 +11,8 @@ app.use(logger('dev'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use('/', indexRouter);
 
 app.use((req, res, next) => {
     const err = new Error('Not Found');
