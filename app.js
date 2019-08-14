@@ -2,6 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
 
+const heritageRouter = require('./routes/heritage');
 const indexRouter = require('./routes/index');
 
 const port = process.env.PORT || 3000;
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/', indexRouter);
+app.use('/heritage', indexRouter);
 
 app.use((req, res, next) => {
     const err = new Error('Not Found');
