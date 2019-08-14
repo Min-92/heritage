@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.post('/', async (req, res, next) => {
     try {
+        console.log(req.body);
         const { questions, category, company } = req.body;
         for (let i in questions) {
             const heritage = new Heritage({
