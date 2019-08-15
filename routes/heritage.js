@@ -5,8 +5,13 @@ const router = express.Router();
 
 router.post('/', async (req, res, next) => {
     try {
-        console.log(req.body);
         const { questions, category, company } = req.body;
+        if(!questions || !category || !company) {
+            return res.status(400).json({
+                code: 400,
+                message : 'required parameters'
+            }) 
+        }
         for (let i in questions) {
             const heritage = new Heritage({
                 question: questions[i],
