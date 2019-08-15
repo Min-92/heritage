@@ -21,8 +21,10 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:category', async (req, res, next) => {
     const category = req.params.category;
+    const deleted = false;
+
     if (categoryObj[category]) {
-        const questions = await Heritage.find({ category });
+        const questions = await Heritage.find({ category, deleted });
         return res.send({ questions });
     }
     return next();
