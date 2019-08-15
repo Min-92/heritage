@@ -3,6 +3,25 @@ const { Heritage } = require('../model/database');
 
 const router = express.Router();
 
+router.get('/', async (req, res, next) => {
+    const { _id } = req.query;
+    if (!_id) {
+        return res.status(400).json({
+            code: 400,
+            message: 'required query'
+        })
+    }
+    const deleted = false;
+    const question = await Heritage.findOne({ _id, deleted });
+    if (!question) {
+        return res.status(400).json({
+            code: 400,
+            message: 'invalid id'
+        })
+    }
+    return res.send(question);
+})
+
 router.post('/', async (req, res, next) => {
     try {
         const { questions, category, company } = req.body;
