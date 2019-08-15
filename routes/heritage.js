@@ -1,110 +1,15 @@
 const express = require('express');
 const { Heritage } = require('../model/database');
+const { addResStatus, getOnequestion, postQuestions, updateQuestions, deleteQuestion } = require('../controller/heritageController');
 
 const router = express.Router();
 
-router.get('/', async (req, res, next) => {
-    const { _id } = req.query;
-    if (!_id) {
-        return res.status(400).json({
-            code: 400,
-            message: 'required query'
-        })
-    }
-    const deleted = false;
-    const question = await Heritage.findOne({ _id, deleted });
-    if (!question) {
-        return res.status(400).json({
-            code: 400,
-            message: 'invalid id'
-        })
-    }
-    return res.send(question);
-})
+router.get('/', getOnequestion)
 
-router.post('/', async (req, res, next) => {
-    try {
-        const { questions, category, company } = req.body;
-        if (!questions || !category || !company) {
-            return res.status(400).json({
-                code: 400,
-                message: 'required parameters'
-            })
-        }
-        for (let i in questions) {
-            const heritage = new Heritage({
-                question: questions[i],
-                category,
-                company
-            })
+router.post('/', postQuestions)
 
-            heritage.save();
-        }
-        return res.sendStatus(200);
-    } catch (err) {
-        return next(err);
-    }
+router.put('/', updateQuestions)
 
-})
-
-router.put('/', async (req, res, next) => {
-    const { _id } = req.query;
-    if (!_id) {
-        return res.status(400).json({
-            code: 400,
-            message: 'required query'
-        })
-    }
-
-    const { question, category, company } = req.body;
-    if (!question || !category || !company) {
-        return res.status(400).json({
-            code: 400,
-            message: 'required parameters'
-        })
-    }
-
-    await Heritage.findByIdAndUpdate({ _id }, { question, category, company }, (err, question) => {
-        if (err) {
-            console.err(err);
-            return next(err);
-        }
-
-        if (!question) {
-            return res.status(400).json({
-                code: 400,
-                message: 'invalid id'
-            })
-        }
-
-        return res.sendStatus(200);
-    });
-})
-
-router.delete('/', async (req, res, next) => {
-    const { _id } = req.query;
-    if (!_id) {
-        return res.status(400).json({
-            code: 400,
-            message: 'required query'
-        })
-    }
-
-    await Heritage.findByIdAndUpdate({ _id }, { deleted: true }, (err, question) => {
-        if (err) {
-            console.err(err);
-            return next(err);
-        }
-
-        if (!question) {
-            return res.status(400).json({
-                code: 400,
-                message: 'invalid id'
-            })
-        }
-
-        return res.sendStatus(200);
-    });
-})
+router.delete('/', deleteQuestion)
 
 module.exports = router;
