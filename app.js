@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const heritageRouter = require('./routes/heritage');
 const indexRouter = require('./routes/index');
+const examRouter = require('./routes/exam');
 
 const port = process.env.PORT || 3000;
 const mongoURI = process.env.MONGO_URI;
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/', indexRouter);
 app.use('/heritage', heritageRouter);
+app.use('/exam', examRouter);
 
 app.use((req, res, next) => {
     const err = new Error('Not Found');
@@ -35,7 +37,8 @@ app.use((err, req, res, next) => {
 
 mongoose.connect((mongoURI), {
     useCreateIndex: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useFindAndModify: true 
 });
 
 app.listen(port, () => {
