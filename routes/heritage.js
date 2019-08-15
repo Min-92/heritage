@@ -28,6 +28,40 @@ router.post('/', async (req, res, next) => {
 
 })
 
+router.put('/', async (req, res, next) => {
+    const { _id } = req.query;
+    if (!_id) {
+        return res.status(400).json({
+            code: 400,
+            message: 'required query'
+        })
+    }
+
+    const { question, category, company } = req.body;
+    if (!question || !category || !company) {
+        return res.status(400).json({
+            code: 400,
+            message: 'required parameters'
+        })
+    }
+
+    await Heritage.findByIdAndUpdate({ _id }, { question, category, company }, (err, question) => {
+        if (err) {
+            console.err(err);
+            return next(err);
+        }
+
+        if (!question) {
+            return res.status(400).json({
+                code: 400,
+                message: 'invalid id'
+            })
+        }
+
+        return res.sendStatus(200);
+    });
+})
+
 router.delete('/', async (req, res, next) => {
     const { _id } = req.query;
     if (!_id) {
@@ -35,15 +69,15 @@ router.delete('/', async (req, res, next) => {
             code: 400,
             message: 'required query'
         })
-    }   
+    }
 
-    await Heritage.findByIdAndUpdate({ _id }, {deleted : true}, (err, question) => {
+    await Heritage.findByIdAndUpdate({ _id }, { deleted: true }, (err, question) => {
         if (err) {
             console.err(err);
             return next(err);
         }
 
-        if(!question){
+        if (!question) {
             return res.status(400).json({
                 code: 400,
                 message: 'invalid id'
