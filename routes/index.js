@@ -7,8 +7,12 @@ const categoryObj = {
     ios: 'ios', front: 'front', back: 'back'
 }
 
-router.get('/categories', async (req, res, next) => {
-    res.send({categories : categoryObj});
+router.get('/categories', (req, res, next) => {
+    const categories = []
+    for (let value in categoryObj) {
+        categories.push(value);
+    }
+    res.send({ categories });
 })
 
 router.get('/', async (req, res, next) => {
