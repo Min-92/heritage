@@ -1,17 +1,12 @@
 const express = require('express');
 const { Heritage } = require('../model/database');
+const { getCategoryArray, categoryObj } = require('../controller/');
 
 const router = express.Router();
 
-const categoryObj = {
-    ios: 'ios', front: 'front', back: 'back'
-}
 
 router.get('/categories', (req, res, next) => {
-    const categories = []
-    for (let value in categoryObj) {
-        categories.push(value);
-    }
+    const categories = getCategoryArray();
     res.send({ categories });
 })
 
