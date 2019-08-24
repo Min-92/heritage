@@ -4,8 +4,8 @@ const logger = require('morgan');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-const heritageRouter = require('./routes/heritage');
 const indexRouter = require('./routes/index');
+const heritageRouter = require('./routes/heritage');
 const examRouter = require('./routes/exam');
 
 const port = process.env.PORT || 3000;

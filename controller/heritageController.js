@@ -24,7 +24,7 @@ const postQuestions = async (req, res, next) => {
         if (!questions || !category || !company) {
             return addResStatus(res, 400, 'required parameters');
         }
-        for (let i in questions) {
+        for (let i of questions) {
             const heritage = new Heritage({
                 question: questions[i],
                 category,
@@ -40,7 +40,7 @@ const postQuestions = async (req, res, next) => {
 
 }
 
-const updateQuestions = async (req, res, next) => {
+const putQuestions = async (req, res, next) => {
     const { _id } = req.query;
     if (!_id) return addResStatus(res, 400, 'required query');
 
@@ -78,5 +78,5 @@ const deleteQuestion = async (req, res, next) => {
 }
 
 module.exports = {
-    addResStatus, getOnequestion, postQuestions, updateQuestions, deleteQuestion
+    addResStatus, getOnequestion, postQuestions, putQuestions, deleteQuestion
 }
