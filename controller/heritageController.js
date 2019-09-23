@@ -20,13 +20,12 @@ const getOnequestion = async (req, res, next) => {
 const postQuestions = async (req, res, next) => {
     try {
         const { questions, category, company } = req.body;
-
         if (!questions || !category || !company) {
             return addResStatus(res, 400, 'required parameters');
         }
-        for (let i of questions) {
+        for (let value of questions) {
             const heritage = new Heritage({
-                question: questions[i],
+                question: value,
                 category,
                 company
             })
